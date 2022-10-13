@@ -4,6 +4,7 @@ import { getManager, Repository } from 'typeorm';
 import { CreatePodcastsInput, UpdatePodcastsInput } from './dtos/podcasts.dto';
 import { NOT_FOUND_PODCAST } from '../podcasts.error-message';
 import { Podcast } from './podcast.entity';
+import { Episode } from '../episode/episode.entity';
 
 @Injectable()
 export class PodcastService {
@@ -13,7 +14,13 @@ export class PodcastService {
   ) {}
 
   async getAllPodcasts(): Promise<Podcast[]> {
-    return await this.podcastRepository.find();
+    const podcasts = await this.podcastRepository.find({
+      relations: ['episodes'],
+    });
+    for (const p of podcasts) {
+      const episodes: Episode[] = p.episodes;
+    }
+    return podcasts;
   }
 
   async getPodcast(id: number): Promise<Podcast> {
@@ -44,6 +51,6 @@ export class PodcastService {
   }
 
   async deletePodcast(id: number): Promise<void> {
-    this.podcastRepository.delete(id).then((r) => console.log(r));
+    this.podcastRepository.delete(id);
   }
 }

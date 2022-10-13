@@ -24,6 +24,8 @@ export class Episode extends BaseEntity {
   @Field(() => String)
   category: string;
 
-  @ManyToOne(() => Podcast, (podcast) => podcast.episodes)
+  @ManyToOne(() => Podcast, (podcast) => podcast.episodes, {
+    onDelete: 'CASCADE',
+  })
   podcast!: Podcast;
 }

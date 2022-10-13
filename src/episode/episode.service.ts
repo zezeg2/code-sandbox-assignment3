@@ -41,7 +41,6 @@ export class EpisodeService {
         category,
         podcast,
       });
-      podcast.episodes;
       return await this.episodeRepository.save(episode);
     });
   }

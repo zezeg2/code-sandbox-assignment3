@@ -32,7 +32,7 @@ export class Podcast extends BaseEntity {
   @IsNumber()
   rating?: number;
 
-  @OneToMany(() => Episode, (episode) => episode.podcast)
+  @OneToMany(() => Episode, (episode) => episode.podcast, { cascade: true })
   @Field(() => [Episode], { nullable: true })
   episodes?: Episode[];
 }
